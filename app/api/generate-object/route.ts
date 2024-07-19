@@ -1,24 +1,29 @@
-import { generateObject } from 'ai';
-import { openai } from '@ai-sdk/openai';
-import { z } from 'zod';
+import { generateText } from "ai";
+import { createOpenAI } from "@ai-sdk/openai";
+import { supportedDevicesSchema } from "../../../pages/tools/devices";
 
 export async function POST(req: Request) {
-  const { prompt }: { prompt: string } = await req.json();
-
-  const { object } = await generateObject({
-    model: openai('gpt-4'),
-    system: 'You are a helpful assistant.',
-    prompt,
-    schema: z.object({
-      notifications: z.array(
-        z.object({
-          name: z.string().describe('Name of a fictional person.'),
-          message: z.string().describe('Do not use emojis or links.'),
-          minutesAgo: z.number(),
-        }),
-      ),
-    }),
+  const { prompt, devicesStatus }: { prompt: string; devicesStatus: any[] } =
+    await req.json();
+  console.log(prompt);
+  console.log(devicesStatus);
+  const perplexity = createOpenAI({
+    apiKey: process.env.PERPLEXITY_API_KEY ?? "",
+    baseURL: "https://api.perplexity.ai/",
   });
-
-  return Response.json({ object });
+  const model = perplexity("llama-3-sonar-small-32k-chat");
+  const systemPersonality = `You will ONLY respond with a valid Javascript array compatible with a JSON.parse() string, under no circustances you can respondond whith a non parseable string. You are a home assistant that control
+  various devices, user might talk to you in spanish, this is the schema of supported devices ${JSON.stringify(
+    supportedDevicesSchema
+  )}. And this is the current status of the user's devices ${JSON.stringify(
+    devicesStatus
+  )}. Return a modified object with the users prompt`;
+  console.log(String(systemPersonality));
+  const generateObjectRequest = await generateText({
+    model,
+    prompt,
+    system: systemPersonality,
+  });
+  console.log(generateObjectRequest);
+  return Response.json({ object: generateObjectRequest.text });
 }

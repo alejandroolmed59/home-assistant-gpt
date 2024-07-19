@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function Page() {
-  const [generation, setGeneration] = useState('');
+  const [generation, setGeneration] = useState('HELOU');
   const [isLoading, setIsLoading] = useState(false);
 
   return (
@@ -14,7 +14,7 @@ export default function Page() {
           await fetch('/api/generate-text', {
             method: 'POST',
             body: JSON.stringify({
-              prompt: 'Why is the sky blue?',
+              prompt: 'Que dia es hoy?',
             }),
           }).then(response => {
             response.json().then(json => {
@@ -30,7 +30,7 @@ export default function Page() {
       {isLoading ? (
         'Loading...'
       ) : (
-        <div data-testid="generation">generation</div>
+        <div data-testid="generation">{generation}</div>
       )}
     </div>
   );
