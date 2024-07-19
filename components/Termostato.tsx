@@ -35,39 +35,35 @@ export const TermostatoComponent = (props: {
               <Badge color="#A9A9A9">{props.switch}</Badge>{" "}
             </Grid.Col>
           ) : (
-            <>
-              <Grid.Col span={6}>
-                <Badge color={props.mode === "HEAT" ? "#dc2626" : "#22d3ee"}>
-                  Temperatura {props.temperature}°
-                </Badge>
-              </Grid.Col>
-              <Grid.Col span={6}>
-                <Badge
-                  fullWidth
-                  color={props.mode === "HEAT" ? "#dc2626" : "#A9A9A9"}
-                >
-                  HEAT
-                </Badge>
-              </Grid.Col>
-              <Grid.Col span={6}>
-                <Badge
-                  fullWidth
-                  color={props.mode === "COLD" ? "#22d3ee" : "#A9A9A9"}
-                >
-                  COLD
-                </Badge>
-              </Grid.Col>
-            </>
+            <Grid.Col span={6}>
+              <Badge color={props.mode === "HEAT" ? "#dc2626" : "#22d3ee"}>
+                Temperatura {props.temperature}°
+              </Badge>
+            </Grid.Col>
           )}
         </Grid>
 
-        <Text size="md" c="dimmed">
+        <Text size="sm" c="dimmed">
           {props.description}
         </Text>
-
-        <Button color="blue" fullWidth mt="md" radius="md">
-          Book classic tour now
-        </Button>
+        <Grid grow gutter="xs" className="mt-2">
+          <Grid.Col span={6}>
+            <Badge
+              fullWidth
+              color={props.mode === "HEAT" ? "#dc2626" : "#A9A9A9"}
+            >
+              HEAT
+            </Badge>
+          </Grid.Col>
+          <Grid.Col span={6}>
+            <Badge
+              fullWidth
+              color={props.mode === "COLD" ? "#22d3ee" : "#A9A9A9"}
+            >
+              COLD
+            </Badge>
+          </Grid.Col>
+        </Grid>
       </Card>
     </div>
   );

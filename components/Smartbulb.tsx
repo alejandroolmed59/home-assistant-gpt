@@ -26,22 +26,21 @@ export const SmartBulbComponent = (props: {
           <Badge color={props.switch === "ON" ? "#46E14E" : "#A9A9A9"}>
             {props.switch}
           </Badge>
-          <Badge
-            defaultChecked
-            variant="light"
-            gradient={{ from: "#f23030", to: "#0046de", deg: 90 }}
-          >
-            RGB enabled
-          </Badge>
         </Group>
 
         <Text size="sm" c="dimmed">
           {props.description}
         </Text>
 
-        <Button color="blue" fullWidth mt="md" radius="md">
-          Book classic tour now
-        </Button>
+        <Badge
+          className="mt-2"
+          defaultChecked
+          variant="gradient"
+          fullWidth
+          gradient={{ from: "#f23030", to: "#0046de", deg: 70 }}
+        >
+          RGB enabled
+        </Badge>
       </Card>
     </div>
   );

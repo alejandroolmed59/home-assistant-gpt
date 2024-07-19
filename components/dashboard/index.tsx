@@ -22,11 +22,11 @@ export default function Page() {
       id: "2",
       name: "Mi termostato",
       description:
-        "En verano gasta mas electricidad de la necesaria al esta encendido en modo COLD todo el dia",
+        "En verano gasta mas electricidad de la necesaria al esta encendido todo el dia",
       type: "thermostat",
       properties: {
         mode: "HEAT",
-        temperature: 21,
+        temperature: 32,
         switch: "ON",
       },
     },
@@ -44,7 +44,7 @@ export default function Page() {
       id: "4",
       name: "Bombilla de mi habitacion",
       description:
-        "Bombilla RGB de mi habitacion, para cuando estoy aburrido puede simular tener una disco en mi propia habitacion",
+        "Cuando estoy aburrido puedo simular tener una disco en mi propia habitacion",
       type: "smartbulb",
       properties: {
         color: "#6a00c9",
@@ -116,11 +116,12 @@ export default function Page() {
           color="blue"
           withCloseButton={false}
           title="EJEMPLOS DE PRUEBA ✨✨🤖"
-          style={{ fontSize: "4rem" }}
+          radius="xl"
         >
-          - Encender el smartplug del cargador movil; Apagar todos los plugs;
-          Cambiar el color de la bombilla a verde; Cambiar el modo del
-          termostato a COLD y bajar la temperatura a 5 grados
+          • Encender el smartplug del cargador movil • Apagar todos los
+          dispositivos • Cambiar el color de la bombilla a verde • Cambiar el
+          modo del termostato a COLD y bajar la temperatura a 13 grados. Y
+          cualquier otro!
         </Alert>
       </div>
       <div className="flex justify-center items-center h-screen">
@@ -167,8 +168,10 @@ export default function Page() {
           onChange={(event) => {
             setInput(event.target.value);
           }}
+          variant="filled"
           size="xl"
           radius="lg"
+          classNames={{ input: "outline outline-2 outline-offset-2" }}
           onKeyDown={async (event) => {
             if (event.key === "Enter") {
               await onSendCommand();

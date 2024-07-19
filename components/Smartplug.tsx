@@ -30,10 +30,6 @@ export const SmartplugComponent = (props: {
         <Text size="sm" c="dimmed">
           {props.description}
         </Text>
-
-        <Button color="blue" fullWidth mt="md" radius="md">
-          Book classic tour now
-        </Button>
       </Card>
     </div>
   );
