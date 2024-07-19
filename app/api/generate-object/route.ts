@@ -10,12 +10,12 @@ export async function POST(req: Request) {
     baseURL: "https://api.perplexity.ai/",
   });
   const model = perplexity("llama-3-sonar-small-32k-chat");
-  const systemPersonality = `You will ONLY respond with a valid Javascript array compatible with a JSON.parse() string, under no circustances you can respondond whith a non parseable string. You are a home assistant that control
+  const systemPersonality = `You will ONLY respond with a valid Javascript array compatible with a JSON.parse() string, under no circustances you can respond with a non parseable string. You are a home assistant that controls
   various devices, user might talk to you in spanish, this is the schema of supported devices ${JSON.stringify(
     supportedDevicesSchema
   )}. And this is the current status of the user's devices ${JSON.stringify(
     devicesStatus
-  )}. Return a modified object with the users prompt.`;
+  )}. Return a modified object with the users prompt. If there is no need to update the devices, return an empty array`;
   console.log(String(systemPersonality));
   const generateObjectRequest = await generateText({
     model,

@@ -1,36 +1,6 @@
 import { CoreMessage } from "ai";
 import { useState } from "react";
-import { Card, Image, Text, Badge, Button, Group } from "@mantine/core";
-
-const CardDemo = () => {
-  return (
-    <div className="w-1/5 mx-4">
-      <Card shadow="sm" padding="lg" radius="md" withBorder>
-        <Card.Section>
-          <Image
-            src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-8.png"
-            height={160}
-            alt="Norway"
-          />
-        </Card.Section>
-
-        <Group justify="space-between" mt="md" mb="xs">
-          <Text fw={500}>Norway Fjord Adventures</Text>
-          <Badge color="pink">On Sale</Badge>
-        </Group>
-
-        <Text size="sm" c="dimmed">
-          With Fjord Tours you can explore more of the magical fjord landscapes
-          with tours and activities on and around the fjords of Norway
-        </Text>
-
-        <Button color="blue" fullWidth mt="md" radius="md">
-          Book classic tour now
-        </Button>
-      </Card>
-    </div>
-  );
-};
+import { CardDemo, SmartplugComponent } from "@/components";
 
 export default function Page() {
   const [input, setInput] = useState("");
@@ -74,38 +44,39 @@ export default function Page() {
   const onSendCommand = async () => {
     {
       setInput("");
-      const newUserMessage = { role: "user", content: input };
-      const response = await fetch("/api/generate-chat", {
+      //const newUserMessage = { role: "user", content: input };
+      //const response = await fetch("/api/generate-chat", {
+      //  method: "POST",
+      //  body: JSON.stringify({
+      //    messages: [...messages, newUserMessage],
+      //  }),
+      //});
+      //const { message: newMessage } = await response.json();
+      //setMessages((currentMessages) => [
+      //  ...currentMessages,
+      //  newUserMessage,
+      //  newMessage,
+      //]);
+      const responseGenerateObject = await fetch("/api/generate-object", {
         method: "POST",
         body: JSON.stringify({
-          messages: [...messages, newUserMessage],
+          devicesStatus: [...devices],
+          prompt: input,
         }),
       });
-      const { message: newMessage } = await response.json();
-      setMessages((currentMessages) => [
-        ...currentMessages,
-        newUserMessage,
-        newMessage,
-      ]);
-      if (newMessage.content[0].text === "ACTUALIZAR") {
-        const responseGenerateObject = await fetch("/api/generate-object", {
-          method: "POST",
-          body: JSON.stringify({
-            devicesStatus: [...devices],
-            prompt: input,
-          }),
-        });
-        const devicesUpdateResponse: unknown =
-          await responseGenerateObject.json();
-        const newDevicesStateArray = Array.isArray(devicesUpdateResponse)
-          ? devicesUpdateResponse
-          : [devicesUpdateResponse];
-        console.log(
-          "new state of devices:",
-          JSON.stringify(newDevicesStateArray)
-        );
-        updateArrayState(newDevicesStateArray);
-      }
+      const devicesUpdateResponse: unknown =
+        await responseGenerateObject.json();
+      const newDevicesStateArray = Array.isArray(devicesUpdateResponse)
+        ? devicesUpdateResponse
+        : [devicesUpdateResponse];
+      console.log(
+        "new state of devices:",
+        JSON.stringify(newDevicesStateArray)
+      );
+      updateArrayState(newDevicesStateArray);
+      //if (newMessage.content[0].text === "ACTUALIZAR") {
+      //
+      //}
     }
   };
   const updateArrayState = (devicesUpdated: any[]) => {
@@ -139,10 +110,18 @@ export default function Page() {
       </div>
       */}
       <div className="flex justify-center items-center h-screen">
-        <CardDemo />
-        <CardDemo />
-        <CardDemo />
-        <CardDemo />
+        {devices.map((device) => {
+          if (device.type === "smartplug") {
+            return (
+              <SmartplugComponent
+                key={device.id}
+                switch={device.properties.switch as "ON" | "OFF"}
+              />
+            );
+          } else {
+            return <CardDemo />;
+          }
+        })}
       </div>
       <div className="fixed bottom-0 p-2 w-full">
         <input
