@@ -1,7 +1,11 @@
 import { Card, Image, Text, Badge, Button, Group } from "@mantine/core";
 import { PiPlugsConnectedFill, PiPlugsFill } from "react-icons/pi";
 
-export const SmartplugComponent = (props: { switch: "ON" | "OFF" }) => {
+export const SmartplugComponent = (props: {
+  name: string;
+  description: string;
+  switch: "ON" | "OFF";
+}) => {
   return (
     <div className="w-1/5 mx-4">
       <Card shadow="sm" padding="lg" radius="md" withBorder>
@@ -17,20 +21,15 @@ export const SmartplugComponent = (props: { switch: "ON" | "OFF" }) => {
         </Card.Section>
 
         <Group justify="space-between" mt="md" mb="xs">
-          <Text fw={500}>Norway Fjord Adventures</Text>
+          <Text fw={500}>{props.name}</Text>
           <Badge color={props.switch === "ON" ? "#46E14E" : "#A9A9A9"}>
             {props.switch}
           </Badge>
         </Group>
 
         <Text size="sm" c="dimmed">
-          With Fjord Tours you can explore more of the magical fjord landscapes
-          with tours and activities on and around the fjords of Norway
+          {props.description}
         </Text>
-
-        <Button color="blue" fullWidth mt="md" radius="md">
-          Book classic tour now
-        </Button>
       </Card>
     </div>
   );

@@ -15,7 +15,7 @@ export async function POST(req: Request) {
     supportedDevicesSchema
   )}. And this is the current status of the user's devices ${JSON.stringify(
     devicesStatus
-  )}. Return a modified object with the users prompt. If there is no need to update the devices, return an empty array`;
+  )}. Return a modified object with the users prompt, for each modified device always return the 'properties' with all their properties, even if some are unmodified. If there is no need to update the devices, return an empty array.`;
   console.log(String(systemPersonality));
   const generateObjectRequest = await generateText({
     model,
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     const parsedObj = JSON.parse(generateObjectRequest.text);
     return Response.json(parsedObj);
   } catch (e) {
-    console.error("cannot parse response from ai");
+    console.error("cannot parse response from ai", e);
     return Response.json([]);
   }
 }

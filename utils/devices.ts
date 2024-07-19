@@ -1,6 +1,7 @@
 export const supportedDevicesSchema = [
   {
     name: "string",
+    description: "string",
     type: "smartbulb",
     properties: {
       color: {
@@ -16,6 +17,7 @@ export const supportedDevicesSchema = [
   {
     name: "string",
     type: "smartplug",
+    description: "string",
     properties: {
       switch: {
         type: "string",
@@ -26,6 +28,7 @@ export const supportedDevicesSchema = [
   {
     name: "string",
     type: "thermostat",
+    description: "string",
     properties: {
       mode: {
         type: "string",
