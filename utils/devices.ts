@@ -29,7 +29,11 @@ export const supportedDevicesSchema = [
     properties: {
       mode: {
         type: "string",
-        enum: ["HOT", "COLD", "OFF"],
+        enum: ["HEAT", "COLD"],
+        switch: {
+          type: "string",
+          enum: ["ON", "OFF"],
+        },
       },
       temperature: {
         type: "string",

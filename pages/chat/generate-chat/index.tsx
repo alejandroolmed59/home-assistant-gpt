@@ -1,6 +1,7 @@
 import { CoreMessage } from "ai";
 import { useState } from "react";
-import { CardDemo, SmartplugComponent } from "@/components";
+import { CardDemo, SmartplugComponent, SmartBulbComponent } from "@/components";
+import { TermostatoComponent } from "@/components/Termostato";
 
 export default function Page() {
   const [input, setInput] = useState("");
@@ -21,6 +22,7 @@ export default function Page() {
       properties: {
         mode: "HEAT",
         temperature: 21,
+        switch: "ON",
       },
     },
     {
@@ -36,7 +38,7 @@ export default function Page() {
       name: "bedroom bulb",
       type: "smartbulb",
       properties: {
-        color: "#008000",
+        color: "#ff0000",
         switch: "ON",
       },
     },
@@ -116,6 +118,23 @@ export default function Page() {
               <SmartplugComponent
                 key={device.id}
                 switch={device.properties.switch as "ON" | "OFF"}
+              />
+            );
+          } else if (device.type === "smartbulb") {
+            return (
+              <SmartBulbComponent
+                key={device.id}
+                switch={device.properties.switch as "ON" | "OFF"}
+                color={device.properties.color!}
+              />
+            );
+          } else if (device.type === "thermostat") {
+            return (
+              <TermostatoComponent
+                key={device.id}
+                switch={device.properties.switch as "ON" | "OFF"}
+                mode={device.properties.mode as "HEAT" | "COLD"}
+                temperature={device.properties.temperature!}
               />
             );
           } else {

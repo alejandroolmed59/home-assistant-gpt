@@ -1,6 +1,6 @@
 import { generateText } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
-import { supportedDevicesSchema } from "../../../pages/tools/devices";
+import { supportedDevicesSchema } from "@/utils/devices";
 
 export async function POST(req: Request) {
   const { prompt, devicesStatus }: { prompt: string; devicesStatus: any[] } =

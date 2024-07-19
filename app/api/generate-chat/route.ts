@@ -1,6 +1,5 @@
 import { CoreMessage, generateText } from "ai";
 import { createOpenAI, openai } from "@ai-sdk/openai";
-import { supportedDevicesSchema } from "../../../pages/tools/devices";
 import { z } from "zod";
 
 export async function POST(req: Request) {

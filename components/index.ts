@@ -1,3 +1,5 @@
 import { CardDemo } from "./Card";
 import { SmartplugComponent } from "./Smartplug";
-export { CardDemo, SmartplugComponent };
+import { SmartBulbComponent } from "./Smartbulb";
+import { TermostatoComponent } from "./Termostato";
+export { CardDemo, SmartplugComponent, SmartBulbComponent };
