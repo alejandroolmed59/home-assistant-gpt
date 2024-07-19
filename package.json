@@ -9,12 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ai-sdk/openai": "latest",
-    "@ai-sdk/react": "latest",
+    "@ai-sdk/openai": "0.0.36",
+    "@ai-sdk/react": "0.0.19",
     "@mantine/core": "^7.11.2",
     "@mantine/hooks": "^7.11.2",
-    "ai": "latest",
-    "next": "latest",
+    "ai": "3.2.19",
+    "next": "14.2.5",
     "openai": "^4.33.0",
     "react": "^18",
     "react-dom": "^18",
