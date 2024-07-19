@@ -30,7 +30,62 @@ export default function Page() {
         switch: "OFF",
       },
     },
+    {
+      id: "4",
+      name: "bedroom bulb",
+      type: "smartbulb",
+      properties: {
+        color: "#008000",
+        switch: "ON",
+      },
+    },
   ]);
+  const onSendCommand = async () => {
+    {
+      setInput("");
+      const newUserMessage = { role: "user", content: input };
+      const response = await fetch("/api/generate-chat", {
+        method: "POST",
+        body: JSON.stringify({
+          messages: [...messages, newUserMessage],
+        }),
+      });
+      const { message: newMessage } = await response.json();
+      setMessages((currentMessages) => [
+        ...currentMessages,
+        newUserMessage,
+        newMessage,
+      ]);
+      if (newMessage.content[0].text === "ACTUALIZAR") {
+        const responseGenerateObject = await fetch("/api/generate-object", {
+          method: "POST",
+          body: JSON.stringify({
+            devicesStatus: [...devices],
+            prompt: input,
+          }),
+        });
+        const devicesUpdateResponse: unknown =
+          await responseGenerateObject.json();
+        const newDevicesStateArray = Array.isArray(devicesUpdateResponse)
+          ? devicesUpdateResponse
+          : [devicesUpdateResponse];
+        console.log(
+          "new state of devices:",
+          JSON.stringify(newDevicesStateArray)
+        );
+        updateArrayState(newDevicesStateArray);
+      }
+    }
+  };
+  const updateArrayState = (devicesUpdated: any[]) => {
+    const modifiedState = devices.map((obj) => {
+      // Find the modified object with the same id
+      let modifiedObj = devicesUpdated.find((mod) => mod.id === obj.id);
+      // If modified object exists, replace the original object with it
+      return modifiedObj ? modifiedObj : obj;
+    });
+    setDevices(modifiedState);
+  };
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-col p-2 gap-2">
@@ -61,31 +116,7 @@ export default function Page() {
           className="bg-zinc-100 w-full p-2"
           onKeyDown={async (event) => {
             if (event.key === "Enter") {
-              setInput("");
-              const newUserMessage = { role: "user", content: input };
-              const response = await fetch("/api/generate-chat", {
-                method: "POST",
-                body: JSON.stringify({
-                  messages: [...messages, newUserMessage],
-                }),
-              });
-              const { message: newMessage } = await response.json();
-              setMessages((currentMessages) => [
-                ...currentMessages,
-                newUserMessage,
-                newMessage,
-              ]);
-              console.log(messages);
-              if (newMessage.content[0].text === "ACTUALIZAR") {
-                const response = await fetch("/api/generate-object", {
-                  method: "POST",
-                  body: JSON.stringify({
-                    devicesStatus: [...devices],
-                    prompt: input,
-                  }),
-                });
-                console.log(response);
-              }
+              await onSendCommand();
             }
           }}
         />

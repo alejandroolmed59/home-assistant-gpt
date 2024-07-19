@@ -11,6 +11,8 @@
   "dependencies": {
     "@ai-sdk/openai": "latest",
     "@ai-sdk/react": "latest",
+    "@mantine/core": "^7.11.2",
+    "@mantine/hooks": "^7.11.2",
     "ai": "latest",
     "next": "latest",
     "openai": "^4.33.0",

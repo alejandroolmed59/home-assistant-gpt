@@ -5,8 +5,6 @@ import { supportedDevicesSchema } from "../../../pages/tools/devices";
 export async function POST(req: Request) {
   const { prompt, devicesStatus }: { prompt: string; devicesStatus: any[] } =
     await req.json();
-  console.log(prompt);
-  console.log(devicesStatus);
   const perplexity = createOpenAI({
     apiKey: process.env.PERPLEXITY_API_KEY ?? "",
     baseURL: "https://api.perplexity.ai/",
@@ -17,13 +15,18 @@ export async function POST(req: Request) {
     supportedDevicesSchema
   )}. And this is the current status of the user's devices ${JSON.stringify(
     devicesStatus
-  )}. Return a modified object with the users prompt`;
+  )}. Return a modified object with the users prompt.`;
   console.log(String(systemPersonality));
   const generateObjectRequest = await generateText({
     model,
     prompt,
     system: systemPersonality,
   });
-  console.log(generateObjectRequest);
-  return Response.json({ object: generateObjectRequest.text });
+  try {
+    const parsedObj = JSON.parse(generateObjectRequest.text);
+    return Response.json(parsedObj);
+  } catch (e) {
+    console.error("cannot parse response from ai");
+    return Response.json([]);
+  }
 }

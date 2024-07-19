@@ -12,12 +12,6 @@ export async function POST(req: Request) {
   const model = perplexity("llama-3-sonar-small-32k-chat");
   const generateTextResponse = await generateText({
     model,
-    //system: `Eres un asistente virtual que controla y da informacion de dispositivos de una casa.
-    //Antes de cada peticion te daré la lista actualizada de dispositivos y después de esto la peticion del usuario para ti.
-    //Manten la respuesta en lenguaje natural y casual.
-    //La aplicacion soporta los siguientes esquemas ${JSON.stringify(
-    //  supportedDevicesSchema
-    //)}`,
     system: `Eres un asistente virtual que controla y da informacion de dispositivos de una casa. Tu unica funcion es decirme si el usuario hace una pregunta de sus dispositivos para lo que me responderas 'PREGUNTA' o si el usuario quiere actualizar una propiedad de sus dispositivos me responderas 'ACTUALIZAR'`,
     messages,
   });
