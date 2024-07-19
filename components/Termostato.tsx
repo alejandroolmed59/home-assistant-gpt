@@ -1,4 +1,4 @@
-import { Card, Image, Text, Badge, Button, Group } from "@mantine/core";
+import { Card, Image, Text, Badge, Button, Group, Grid } from "@mantine/core";
 import { PiPlugsConnectedFill, PiPlugsFill } from "react-icons/pi";
 import {
   PiThermometer,
@@ -7,6 +7,8 @@ import {
 } from "react-icons/pi";
 
 export const TermostatoComponent = (props: {
+  name: string;
+  description: string;
   switch: "ON" | "OFF";
   temperature: number;
   mode: "HEAT" | "COLD";
@@ -14,9 +16,6 @@ export const TermostatoComponent = (props: {
   return (
     <div className="w-1/5 mx-4">
       <Card shadow="sm" padding="lg" radius="md" withBorder>
-        {
-          //<Card.Section style={{ color: props.color }}> }
-        }
         <Card.Section>
           {props.switch === "OFF" ? (
             <PiThermometer className="w-3/4 h-fit ml-[12%]" />
@@ -27,20 +26,43 @@ export const TermostatoComponent = (props: {
           )}
         </Card.Section>
 
-        <Group justify="space-between" mt="md" mb="xs">
-          <Text fw={500}>Norway Fjord Adventures</Text>
+        <Grid grow gutter="xs">
+          <Grid.Col span={4}>
+            <Text fw={500}>{props.name}</Text>
+          </Grid.Col>
           {props.switch === "OFF" ? (
-            <Badge color="#A9A9A9">{props.switch}</Badge>
+            <Grid.Col span={4}>
+              <Badge color="#A9A9A9">{props.switch}</Badge>{" "}
+            </Grid.Col>
           ) : (
-            <Badge color={props.mode === "HEAT" ? "#dc2626" : "#22d3ee"}>
-              {props.mode} - temperatura {props.temperature}
-            </Badge>
+            <>
+              <Grid.Col span={6}>
+                <Badge color={props.mode === "HEAT" ? "#dc2626" : "#22d3ee"}>
+                  Temperatura {props.temperature}°
+                </Badge>
+              </Grid.Col>
+              <Grid.Col span={6}>
+                <Badge
+                  fullWidth
+                  color={props.mode === "HEAT" ? "#dc2626" : "#A9A9A9"}
+                >
+                  HEAT
+                </Badge>
+              </Grid.Col>
+              <Grid.Col span={6}>
+                <Badge
+                  fullWidth
+                  color={props.mode === "COLD" ? "#22d3ee" : "#A9A9A9"}
+                >
+                  COLD
+                </Badge>
+              </Grid.Col>
+            </>
           )}
-        </Group>
+        </Grid>
 
-        <Text size="sm" c="dimmed">
-          With Fjord Tours you can explore more of the magical fjord landscapes
-          with tours and activities on and around the fjords of Norway
+        <Text size="md" c="dimmed">
+          {props.description}
         </Text>
 
         <Button color="blue" fullWidth mt="md" radius="md">

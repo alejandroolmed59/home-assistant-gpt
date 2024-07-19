@@ -2,6 +2,7 @@ import { CoreMessage } from "ai";
 import { useState } from "react";
 import { CardDemo, SmartplugComponent, SmartBulbComponent } from "@/components";
 import { TermostatoComponent } from "@/components/Termostato";
+import { Input, Alert } from "@mantine/core";
 
 export default function Page() {
   const [input, setInput] = useState("");
@@ -9,7 +10,9 @@ export default function Page() {
   const [devices, setDevices] = useState([
     {
       id: "1",
-      name: "living room plug",
+      name: "SmartPlug living room",
+      description:
+        "Usado para darle electricidad a mi arbol de navidad en navidades o lampara de la sala",
       type: "smartplug",
       properties: {
         switch: "ON",
@@ -17,7 +20,9 @@ export default function Page() {
     },
     {
       id: "2",
-      name: "my air",
+      name: "Mi termostato",
+      description:
+        "En verano gasta mas electricidad de la necesaria al esta encendido en modo COLD todo el dia",
       type: "thermostat",
       properties: {
         mode: "HEAT",
@@ -27,7 +32,9 @@ export default function Page() {
     },
     {
       id: "3",
-      name: "bedroom upper light",
+      name: "SmartPlug cargador movil",
+      description:
+        "Usado para darle electricidad a telefono celular, lo tengo enchufado en mi habitacion",
       type: "smartplug",
       properties: {
         switch: "OFF",
@@ -35,10 +42,12 @@ export default function Page() {
     },
     {
       id: "4",
-      name: "bedroom bulb",
+      name: "Bombilla de mi habitacion",
+      description:
+        "Bombilla RGB de mi habitacion, para cuando estoy aburrido puede simular tener una disco en mi propia habitacion",
       type: "smartbulb",
       properties: {
-        color: "#ff0000",
+        color: "#6a00c9",
         switch: "ON",
       },
     },
@@ -46,19 +55,6 @@ export default function Page() {
   const onSendCommand = async () => {
     {
       setInput("");
-      //const newUserMessage = { role: "user", content: input };
-      //const response = await fetch("/api/generate-chat", {
-      //  method: "POST",
-      //  body: JSON.stringify({
-      //    messages: [...messages, newUserMessage],
-      //  }),
-      //});
-      //const { message: newMessage } = await response.json();
-      //setMessages((currentMessages) => [
-      //  ...currentMessages,
-      //  newUserMessage,
-      //  newMessage,
-      //]);
       const responseGenerateObject = await fetch("/api/generate-object", {
         method: "POST",
         body: JSON.stringify({
@@ -86,7 +82,7 @@ export default function Page() {
       // Find the modified object with the same id
       let modifiedObj = devicesUpdated.find((mod) => mod.id === obj.id);
       // If modified object exists, replace the original object with it
-      return modifiedObj ? modifiedObj : obj;
+      return modifiedObj ? { ...obj, ...modifiedObj } : obj;
     });
     setDevices(modifiedState);
   };
@@ -114,12 +110,27 @@ export default function Page() {
       <h1 className="text-4xl font-bold text-center">
         Smart home automation system
       </h1>
+      <div className="flex justify-center items-center mt-5">
+        <Alert
+          variant="light"
+          color="blue"
+          withCloseButton={false}
+          title="EJEMPLOS DE PRUEBA ✨✨🤖"
+          style={{ fontSize: "4rem" }}
+        >
+          - Encender el smartplug del cargador movil; Apagar todos los plugs;
+          Cambiar el color de la bombilla a verde; Cambiar el modo del
+          termostato a COLD y bajar la temperatura a 5 grados
+        </Alert>
+      </div>
       <div className="flex justify-center items-center h-screen">
         {devices.map((device) => {
           if (device.type === "smartplug") {
             return (
               <SmartplugComponent
                 key={device.id}
+                name={device.name}
+                description={device.description}
                 switch={device.properties.switch as "ON" | "OFF"}
               />
             );
@@ -127,6 +138,8 @@ export default function Page() {
             return (
               <SmartBulbComponent
                 key={device.id}
+                name={device.name}
+                description={device.description}
                 switch={device.properties.switch as "ON" | "OFF"}
                 color={device.properties.color!}
               />
@@ -135,6 +148,8 @@ export default function Page() {
             return (
               <TermostatoComponent
                 key={device.id}
+                name={device.name}
+                description={device.description}
                 switch={device.properties.switch as "ON" | "OFF"}
                 mode={device.properties.mode as "HEAT" | "COLD"}
                 temperature={device.properties.temperature!}
@@ -145,14 +160,15 @@ export default function Page() {
           }
         })}
       </div>
-      <div className="fixed bottom-0 p-2 w-full">
-        <input
+      <div className="fixed bottom-0 p-2 w-full mb-5">
+        <Input
           value={input}
-          placeholder="Send message..."
+          placeholder="Que quieres hacer en tu hogar hoy ? ✨"
           onChange={(event) => {
             setInput(event.target.value);
           }}
-          className="bg-zinc-100 w-full p-2"
+          size="xl"
+          radius="lg"
           onKeyDown={async (event) => {
             if (event.key === "Enter") {
               await onSendCommand();
