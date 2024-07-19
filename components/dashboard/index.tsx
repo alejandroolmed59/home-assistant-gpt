@@ -72,9 +72,6 @@ export default function Page() {
         JSON.stringify(newDevicesStateArray)
       );
       updateArrayState(newDevicesStateArray);
-      //if (newMessage.content[0].text === "ACTUALIZAR") {
-      //
-      //}
     }
   };
   const updateArrayState = (devicesUpdated: any[]) => {
@@ -88,25 +85,6 @@ export default function Page() {
   };
   return (
     <div className="flex flex-col gap-2 h-screen">
-      {/*}
-      <div className="flex flex-col p-2 gap-2">
-        {messages.map((message, index) => (
-          <div key={`${message.role}-${index}`} className="flex flex-row gap-2">
-            <div className="w-24 text-zinc-500">{`${message.role}: `}</div>
-            <div className="w-full">
-              {typeof message.content === "string"
-                ? message.content
-                : message.content
-                    .filter((part) => part.type === "text")
-                    .map((part, partIndex) => (
-                      // @ts-ignore
-                      <div key={partIndex}>{part.text}</div>
-                    ))}
-            </div>
-          </div>
-        ))}
-      </div>
-      */}
       <h1 className="text-4xl font-bold text-center">
         Smart home automation system
       </h1>
@@ -115,56 +93,58 @@ export default function Page() {
           variant="light"
           color="blue"
           withCloseButton={false}
-          title="EJEMPLOS DE PRUEBA ✨✨🤖"
+          title="EJEMPLOS DE PRUEBA"
           radius="xl"
         >
           • Encender el smartplug del cargador movil • Apagar todos los
           dispositivos • Cambiar el color de la bombilla a verde • Cambiar el
-          modo del termostato a COLD y bajar la temperatura a 13 grados. Y
-          cualquier otro!
+          modo del termostato a COLD y bajar la temperatura a 13 grados. •
+          Actualizar descripcion o nombre de dispositivo. Y cualquier otro!
         </Alert>
       </div>
-      <div className="flex justify-center items-center h-screen">
-        {devices.map((device) => {
-          if (device.type === "smartplug") {
-            return (
-              <SmartplugComponent
-                key={device.id}
-                name={device.name}
-                description={device.description}
-                switch={device.properties.switch as "ON" | "OFF"}
-              />
-            );
-          } else if (device.type === "smartbulb") {
-            return (
-              <SmartBulbComponent
-                key={device.id}
-                name={device.name}
-                description={device.description}
-                switch={device.properties.switch as "ON" | "OFF"}
-                color={device.properties.color!}
-              />
-            );
-          } else if (device.type === "thermostat") {
-            return (
-              <TermostatoComponent
-                key={device.id}
-                name={device.name}
-                description={device.description}
-                switch={device.properties.switch as "ON" | "OFF"}
-                mode={device.properties.mode as "HEAT" | "COLD"}
-                temperature={device.properties.temperature!}
-              />
-            );
-          } else {
-            return <CardDemo />;
-          }
-        })}
+      <div className="flex flex-col justify-center items-center h-screen max-h-screen overflow-y-auto">
+        <div className="flex flex-wrap justify-center items-center">
+          {devices.map((device) => {
+            if (device.type === "smartplug") {
+              return (
+                <SmartplugComponent
+                  key={device.id}
+                  name={device.name}
+                  description={device.description}
+                  switch={device.properties.switch as "ON" | "OFF"}
+                />
+              );
+            } else if (device.type === "smartbulb") {
+              return (
+                <SmartBulbComponent
+                  key={device.id}
+                  name={device.name}
+                  description={device.description}
+                  switch={device.properties.switch as "ON" | "OFF"}
+                  color={device.properties.color!}
+                />
+              );
+            } else if (device.type === "thermostat") {
+              return (
+                <TermostatoComponent
+                  key={device.id}
+                  name={device.name}
+                  description={device.description}
+                  switch={device.properties.switch as "ON" | "OFF"}
+                  mode={device.properties.mode as "HEAT" | "COLD"}
+                  temperature={device.properties.temperature!}
+                />
+              );
+            } else {
+              return <CardDemo />;
+            }
+          })}
+        </div>
       </div>
-      <div className="fixed bottom-0 p-2 w-full mb-5">
+      <div className="bottom-0 p-2 w-full mb-5">
         <Input
           value={input}
-          placeholder="Que quieres hacer en tu hogar hoy ? ✨"
+          placeholder="✨✨ Que quieres hacer en tu hogar ? ✨🤖"
           onChange={(event) => {
             setInput(event.target.value);
           }}

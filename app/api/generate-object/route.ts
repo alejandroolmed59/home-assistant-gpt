@@ -26,7 +26,10 @@ export async function POST(req: Request) {
     const parsedObj = JSON.parse(generateObjectRequest.text);
     return Response.json(parsedObj);
   } catch (e) {
-    console.error("cannot parse response from ai", e);
+    console.error(
+      "No se pudo parsear Json o array, devolviendo empty array",
+      e
+    );
     return Response.json([]);
   }
 }
