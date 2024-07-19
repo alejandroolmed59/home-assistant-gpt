@@ -91,7 +91,7 @@ export default function Page() {
     setDevices(modifiedState);
   };
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 h-screen">
       {/*}
       <div className="flex flex-col p-2 gap-2">
         {messages.map((message, index) => (
@@ -111,6 +111,9 @@ export default function Page() {
         ))}
       </div>
       */}
+      <h1 className="text-4xl font-bold text-center">
+        Smart home automation system
+      </h1>
       <div className="flex justify-center items-center h-screen">
         {devices.map((device) => {
           if (device.type === "smartplug") {

@@ -23,7 +23,7 @@ export const TermostatoComponent = (props: {
           ) : props.mode === "HEAT" ? (
             <PiThermometerHotDuotone className="text-red-600 w-3/4 h-fit ml-[12%]" />
           ) : (
-            <PiThermometerColdDuotone className="text-cyan-400	 w-3/4 h-fit ml-[12%]" />
+            <PiThermometerColdDuotone className="text-cyan-400 w-3/4 h-fit ml-[12%]" />
           )}
         </Card.Section>
 
