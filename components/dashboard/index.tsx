@@ -84,74 +84,90 @@ export default function Page() {
     setDevices(modifiedState);
   };
   return (
-    <div className="flex flex-col gap-2 h-screen">
+    <div className="flex flex-col gap-2 h-screen p-5">
       <h1 className="text-4xl font-bold text-center">
-        Smart home automation system
+        Asistente de Casa Inteligente
       </h1>
-      <div className="flex justify-center items-center mt-5">
-        <Alert
-          variant="light"
-          color="blue"
-          withCloseButton={false}
-          title="EJEMPLOS DE PRUEBA"
-          radius="xl"
-        >
-          • Encender el smartplug del cargador movil • Apagar todos los
-          dispositivos • Cambiar el color de la bombilla a verde • Cambiar el
-          modo del termostato a COLD y bajar la temperatura a 13 grados. •
-          Actualizar descripcion o nombre de dispositivo. Y cualquier otro!
-        </Alert>
+      <div className="h-screen max-h-screen overflow-y-auto grid grid-cols-12 gap-5 p-5">
+        {devices.map((device) => {
+          let component: JSX.Element;
+          if (device.type === "smartplug") {
+            component = (
+              <SmartplugComponent
+                key={device.id}
+                name={device.name}
+                description={device.description}
+                switch={device.properties.switch as "ON" | "OFF"}
+              />
+            );
+          } else if (device.type === "smartbulb") {
+            component = (
+              <SmartBulbComponent
+                key={device.id}
+                name={device.name}
+                description={device.description}
+                switch={device.properties.switch as "ON" | "OFF"}
+                color={device.properties.color!}
+              />
+            );
+          } else if (device.type === "thermostat") {
+            component = (
+              <TermostatoComponent
+                key={device.id}
+                name={device.name}
+                description={device.description}
+                switch={device.properties.switch as "ON" | "OFF"}
+                mode={device.properties.mode as "HEAT" | "COLD"}
+                temperature={device.properties.temperature!}
+              />
+            );
+          } else {
+            component = <CardDemo />;
+          }
+          return (
+            <div
+              className="col-span-12 sm:col-span-3"
+              children={component}
+            ></div>
+          );
+        })}
       </div>
-      <div className="flex flex-col justify-center items-center h-screen max-h-screen overflow-y-auto">
-        <div className="flex flex-wrap justify-center items-center">
-          {devices.map((device) => {
-            if (device.type === "smartplug") {
-              return (
-                <SmartplugComponent
-                  key={device.id}
-                  name={device.name}
-                  description={device.description}
-                  switch={device.properties.switch as "ON" | "OFF"}
-                />
-              );
-            } else if (device.type === "smartbulb") {
-              return (
-                <SmartBulbComponent
-                  key={device.id}
-                  name={device.name}
-                  description={device.description}
-                  switch={device.properties.switch as "ON" | "OFF"}
-                  color={device.properties.color!}
-                />
-              );
-            } else if (device.type === "thermostat") {
-              return (
-                <TermostatoComponent
-                  key={device.id}
-                  name={device.name}
-                  description={device.description}
-                  switch={device.properties.switch as "ON" | "OFF"}
-                  mode={device.properties.mode as "HEAT" | "COLD"}
-                  temperature={device.properties.temperature!}
-                />
-              );
-            } else {
-              return <CardDemo />;
-            }
-          })}
-        </div>
-      </div>
+
       <div className="bottom-0 p-2 w-full mb-5">
+        <div className="flex justify-center mb-1">
+          <div className="rounded-t-xl px-4 py-3 bg-sky-100 w-full md:w-3/4">
+            <h4 className="font-bold mb-1">Ordénale a tu asistente:</h4>
+            <div className="pl-5">
+              <ul className="list-disc">
+                <li>Encender el smartplug del cargador movil</li>
+                <li>Apagar todos los dispositivos</li>
+              </ul>
+
+              <ul className="list-disc">
+                <li>
+                  Cambiar el color de la bombilla a verde • Cambiar el modo del
+                  termostato a COLD y bajar la temperatura a 13 grados
+                </li>
+                <li>
+                  Actualizar descripcion o nombre de dispositivo. Y cualquier
+                  otro!
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
         <Input
           value={input}
-          placeholder="✨✨ Que quieres hacer en tu hogar ? ✨🤖"
+          placeholder="✨🤖 ¿Qué quieres hacer en tu hogar?"
           onChange={(event) => {
             setInput(event.target.value);
           }}
           variant="filled"
           size="xl"
           radius="lg"
-          classNames={{ input: "outline outline-2 outline-offset-2" }}
+          classNames={{
+            input: "outline outline-1 outline-gray-300",
+          }}
           onKeyDown={async (event) => {
             if (event.key === "Enter") {
               await onSendCommand();

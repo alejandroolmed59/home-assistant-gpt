@@ -33,10 +33,10 @@ export const supportedDevicesSchema = [
       mode: {
         type: "string",
         enum: ["HEAT", "COLD"],
-        switch: {
-          type: "string",
-          enum: ["ON", "OFF"],
-        },
+      },
+      switch: {
+        type: "string",
+        enum: ["ON", "OFF"],
       },
       temperature: {
         type: "string",
