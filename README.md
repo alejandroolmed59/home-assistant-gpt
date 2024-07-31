@@ -17,8 +17,9 @@ Hay diferentes tipos de dispositivos, enchufes (smartplugs) , termostato, bombil
 Algunos prompts de ejemplo que se le pueden pedir a tu asistente son
 
 Encender el smartplug del cargador movil
-Cambiar el color de la bombilla a verde y encenderla
-Cambiar el modo del termostato a COLD y bajar la temperatura a 13 grados
+Cambiar el color de la bombilla a verde
+Cambiar el modo de Mi termostato a COLD
+Bajar la temperatura a 13 grados
 Actualizar nombre de "smartplug living room" a "Smartplug cocina" y su descripción a "Utilizado en el extractor de humo"
 Apagar todos los dispositivos
 No está limitado a solo estos comando, ¡ Experimenta con combinaciones diferentes !

@@ -144,7 +144,10 @@ export default function Page() {
                   Cambiar el color de la bombilla a verde
                 </li>
                 <li>
-                  Cambiar el modo de Mi termostato a COLD y bajar la temperatura a 13 grados
+                  Cambiar el modo de Mi termostato a COLD
+                </li>
+                <li>
+                  Bajar la temperatura a 13 grados
                 </li>
                 <li>
                   Actualizar descripcion o nombre de dispositivo. 
