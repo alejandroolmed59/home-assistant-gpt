@@ -136,22 +136,21 @@ export default function Page() {
       <div className="bottom-0 p-2 w-full mb-5">
         <div className="flex justify-center mb-1">
           <div className="rounded-t-xl px-4 py-3 bg-sky-100 w-full md:w-3/4">
-            <h4 className="font-bold mb-1">Ordénale a tu asistente:</h4>
+            <h4 className="font-bold mb-1">Ejemplos para ordenarle a tu asistente:</h4>
             <div className="pl-5">
               <ul className="list-disc">
                 <li>Encender el smartplug del cargador movil</li>
+                <li>
+                  Cambiar el color de la bombilla a verde
+                </li>
+                <li>
+                  Cambiar el modo de Mi termostato a COLD y bajar la temperatura a 13 grados
+                </li>
+                <li>
+                  Actualizar descripcion o nombre de dispositivo. 
+                </li>
                 <li>Apagar todos los dispositivos</li>
-              </ul>
-
-              <ul className="list-disc">
-                <li>
-                  Cambiar el color de la bombilla a verde • Cambiar el modo del
-                  termostato a COLD y bajar la temperatura a 13 grados
-                </li>
-                <li>
-                  Actualizar descripcion o nombre de dispositivo. Y cualquier
-                  otro!
-                </li>
+                <li>Y cualquier otro!</li>
               </ul>
             </div>
           </div>
