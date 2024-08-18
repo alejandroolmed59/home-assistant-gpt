@@ -9,44 +9,44 @@ export default function Page() {
   const [messages, setMessages] = useState<CoreMessage[]>([]);
   const [devices, setDevices] = useState([
     {
-      id: "1",
-      name: "SmartPlug living room",
-      description:
-        "Usado para darle electricidad a mi arbol de navidad en navidades o lampara de la sala",
-      type: "smartplug",
-      properties: {
+      id: 1,
+      deviceType: "smartplug",
+      deviceProperties: {
+        deviceName: "SmartPlug living room",
+        description:
+          "Usado para darle electricidad a mi arbol de navidad en navidades o lampara de la sala",
         switch: "ON",
       },
     },
     {
-      id: "2",
-      name: "Mi termostato",
-      description:
-        "En verano gasta mas electricidad de la necesaria al esta encendido todo el dia",
-      type: "thermostat",
-      properties: {
+      id: 2,
+      deviceType: "thermostat",
+      deviceProperties: {
+        deviceName: "Mi termostato",
+        description:
+          "En verano gasta mas electricidad de la necesaria al esta encendido todo el dia",
         mode: "HEAT",
         temperature: 32,
         switch: "ON",
       },
     },
     {
-      id: "3",
-      name: "SmartPlug cargador movil",
-      description:
-        "Usado para darle electricidad a telefono celular, lo tengo enchufado en mi habitacion",
-      type: "smartplug",
-      properties: {
+      id: 3,
+      deviceType: "smartplug",
+      deviceProperties: {
+        deviceName: "SmartPlug cargador movil",
+        description:
+          "Usado para darle electricidad a telefono celular, lo tengo enchufado en mi habitacion",
         switch: "OFF",
       },
     },
     {
-      id: "4",
-      name: "Bombilla de mi habitacion",
-      description:
-        "Cuando estoy aburrido puedo simular tener una disco en mi propia habitacion",
-      type: "smartbulb",
-      properties: {
+      id: 4,
+      deviceType: "smartbulb",
+      deviceProperties: {
+        deviceName: "Bombilla de mi habitacion",
+        description:
+          "Cuando estoy aburrido puedo simular tener una disco en mi propia habitacion",
         color: "#6a00c9",
         switch: "ON",
       },

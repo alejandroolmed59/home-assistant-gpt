@@ -1,9 +1,10 @@
 export const supportedDevicesSchema = [
   {
-    name: "string",
-    description: "string",
-    type: "smartbulb",
-    properties: {
+    id: { type: "number" },
+    deviceType: "smartbulb",
+    deviceProperties: {
+      deviceName: { type: "string" },
+      description: { type: "string" },
       color: {
         type: "hexadecimalstring",
         example: "#74eb34",
@@ -15,10 +16,11 @@ export const supportedDevicesSchema = [
     },
   },
   {
-    name: "string",
-    type: "smartplug",
-    description: "string",
-    properties: {
+    id: { type: "number" },
+    deviceType: "smartplug",
+    deviceProperties: {
+      deviceName: { type: "string" },
+      description: { type: "string" },
       switch: {
         type: "string",
         enum: ["ON", "OFF"],
@@ -26,10 +28,11 @@ export const supportedDevicesSchema = [
     },
   },
   {
-    name: "string",
-    type: "thermostat",
-    description: "string",
-    properties: {
+    id: { type: "number" },
+    deviceType: "thermostat",
+    deviceProperties: {
+      deviceName: { type: "string" },
+      description: { type: "string" },
       mode: {
         type: "string",
         enum: ["HEAT", "COLD"],
