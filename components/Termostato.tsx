@@ -10,7 +10,7 @@ export const TermostatoComponent = (props: {
   name: string;
   description: string;
   switch: "ON" | "OFF";
-  temperature: number;
+  temperature: string;
   mode: "HEAT" | "COOL";
 }) => {
   return (
