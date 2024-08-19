@@ -1,5 +1,5 @@
 import { CoreMessage } from "ai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CardDemo, SmartplugComponent, SmartBulbComponent } from "@/components";
 import { TermostatoComponent } from "@/components/Termostato";
 import { Input, Alert } from "@mantine/core";
@@ -26,7 +26,7 @@ export default function Page() {
         description:
           "En verano gasta mas electricidad de la necesaria al esta encendido todo el dia",
         mode: "HEAT",
-        temperature: 32,
+        temperature: "32",
         switch: "ON",
       },
     },
@@ -52,36 +52,24 @@ export default function Page() {
       },
     },
   ]);
+  const [threadId, setThreadId] = useState<any>();
+
   const onSendCommand = async () => {
     {
       setInput("");
-      const responseGenerateObject = await fetch("/api/generate-object", {
+      const responseGenerateObject = await fetch("/api/open-ai-assistant", {
         method: "POST",
         body: JSON.stringify({
-          devicesStatus: [...devices],
-          prompt: input,
+          threadId: threadId || "",
+          userPrompt: input,
+          devices,
         }),
       });
-      const devicesUpdateResponse: unknown =
-        await responseGenerateObject.json();
-      const newDevicesStateArray = Array.isArray(devicesUpdateResponse)
-        ? devicesUpdateResponse
-        : [devicesUpdateResponse];
-      console.log(
-        "new state of devices:",
-        JSON.stringify(newDevicesStateArray)
-      );
-      updateArrayState(newDevicesStateArray);
+      const response = await responseGenerateObject.json();
+      if (!response.threadId || !response.runExecutionResult) return;
+      setThreadId(response.threadId);
+      setDevices(response.runExecutionResult.devices);
     }
-  };
-  const updateArrayState = (devicesUpdated: any[]) => {
-    const modifiedState = devices.map((obj) => {
-      // Find the modified object with the same id
-      let modifiedObj = devicesUpdated.find((mod) => mod.id === obj.id);
-      // If modified object exists, replace the original object with it
-      return modifiedObj ? { ...obj, ...modifiedObj } : obj;
-    });
-    setDevices(modifiedState);
   };
   return (
     <div className="flex flex-col gap-2 h-screen p-5">
@@ -91,34 +79,34 @@ export default function Page() {
       <div className="h-screen max-h-screen overflow-y-auto grid grid-cols-12 gap-5 p-5">
         {devices.map((device) => {
           let component: JSX.Element;
-          if (device.type === "smartplug") {
+          if (device.deviceType === "smartplug") {
             component = (
               <SmartplugComponent
                 key={device.id}
-                name={device.name}
-                description={device.description}
-                switch={device.properties.switch as "ON" | "OFF"}
+                name={device.deviceProperties.deviceName}
+                description={device.deviceProperties.description}
+                switch={device.deviceProperties.switch as "ON" | "OFF"}
               />
             );
-          } else if (device.type === "smartbulb") {
+          } else if (device.deviceType === "smartbulb") {
             component = (
               <SmartBulbComponent
                 key={device.id}
-                name={device.name}
-                description={device.description}
-                switch={device.properties.switch as "ON" | "OFF"}
-                color={device.properties.color!}
+                name={device.deviceProperties.deviceName}
+                description={device.deviceProperties.description}
+                switch={device.deviceProperties.switch as "ON" | "OFF"}
+                color={device.deviceProperties.color!}
               />
             );
-          } else if (device.type === "thermostat") {
+          } else if (device.deviceType === "thermostat") {
             component = (
               <TermostatoComponent
                 key={device.id}
-                name={device.name}
-                description={device.description}
-                switch={device.properties.switch as "ON" | "OFF"}
-                mode={device.properties.mode as "HEAT" | "COLD"}
-                temperature={device.properties.temperature!}
+                name={device.deviceProperties.deviceName}
+                description={device.deviceProperties.description}
+                switch={device.deviceProperties.switch as "ON" | "OFF"}
+                mode={device.deviceProperties.mode as "HEAT" | "COOL"}
+                temperature={device.deviceProperties.temperature!}
               />
             );
           } else {
@@ -146,7 +134,7 @@ export default function Page() {
               <ul className="list-disc">
                 <li>
                   Cambiar el color de la bombilla a verde • Cambiar el modo del
-                  termostato a COLD y bajar la temperatura a 13 grados
+                  termostato a COOL y bajar la temperatura a 13 grados
                 </li>
                 <li>
                   Actualizar descripcion o nombre de dispositivo. Y cualquier
