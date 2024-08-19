@@ -9,7 +9,7 @@ export async function POST(req: Request) {
     apiKey: process.env.PERPLEXITY_API_KEY ?? "",
     baseURL: "https://api.perplexity.ai/",
   });
-  const model = perplexity("llama-3.1-sonar-small-128k-chat");
+  const model = perplexity("llama-3-sonar-small-32k-chat");
   const systemPersonality = `You will ONLY respond with a valid Javascript array compatible with a JSON.parse() string, under no circustances you can respond with a non parseable string. You are a home assistant that controls
   various devices, user might talk to you in spanish, this is the schema of supported devices ${JSON.stringify(
     supportedDevicesSchema
@@ -26,6 +26,7 @@ export async function POST(req: Request) {
     const parsedObj = JSON.parse(generateObjectRequest.text);
     return Response.json(parsedObj);
   } catch (e) {
+    console.log(generateObjectRequest.text);
     console.error(
       "No se pudo parsear Json o array, devolviendo empty array",
       e
