@@ -53,6 +53,7 @@ export default function Page() {
     },
   ]);
   const [threadId, setThreadId] = useState<any>();
+  const [assistantOutput, setAssistantOutput] = useState<string>("");
 
   const onSendCommand = async () => {
     {
@@ -69,12 +70,13 @@ export default function Page() {
       if (!response.threadId || !response.runExecutionResult) return;
       setThreadId(response.threadId);
       setDevices(response.runExecutionResult.devices);
+      setAssistantOutput(response.messages.lastAssistantMessage);
     }
   };
   return (
     <div className="flex flex-col gap-2 h-screen p-5">
       <h1 className="text-4xl font-bold text-center">
-        Asistente de Casa Inteligente
+        Smart home virtual assistant
       </h1>
       <div className="h-screen max-h-screen overflow-y-auto grid grid-cols-12 gap-5 p-5">
         {devices.map((device) => {
@@ -124,24 +126,8 @@ export default function Page() {
       <div className="bottom-0 p-2 w-full mb-5">
         <div className="flex justify-center mb-1">
           <div className="rounded-t-xl px-4 py-3 bg-sky-100 w-full md:w-3/4">
-            <h4 className="font-bold mb-1">Ordénale a tu asistente:</h4>
-            <div className="pl-5">
-              <ul className="list-disc">
-                <li>Encender el smartplug del cargador movil</li>
-                <li>Apagar todos los dispositivos</li>
-              </ul>
-
-              <ul className="list-disc">
-                <li>
-                  Cambiar el color de la bombilla a verde • Cambiar el modo del
-                  termostato a COOL y bajar la temperatura a 13 grados
-                </li>
-                <li>
-                  Actualizar descripcion o nombre de dispositivo. Y cualquier
-                  otro!
-                </li>
-              </ul>
-            </div>
+            <h4 className="font-bold mb-1">Assistant output</h4>
+            <p>{assistantOutput}</p>
           </div>
         </div>
         <Input

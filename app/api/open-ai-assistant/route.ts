@@ -54,7 +54,9 @@ const getMessagesFromThread = async (threadId: string) => {
       message: messageObject.content[0].text.value,
     };
   });
-  return mappedMessages;
+  const lastAssistantMessage =
+    mappedMessages.find((value) => value.role === "assistant")?.message ?? "";
+  return { lastAssistantMessage, messages: mappedMessages };
 };
 
 const runDeviceManager = async (
@@ -81,7 +83,7 @@ const runDeviceManager = async (
             }[];
           } = JSON.parse(openAiFunction.function.arguments);
           console.log(
-            `Arguments determined for update by gpt-4: ${JSON.stringify(args)}`
+            `Arguments determined for update_device by gpt-4: ${JSON.stringify(args)}`
           );
           const deviceChanging = newStateOfDevices.find(
             (device) => Number(device.id) === Number(args.deviceId)
@@ -108,6 +110,9 @@ const runDeviceManager = async (
         if (openAiFunction.function.name === "get_device_status") {
           const args: { deviceId: string } = JSON.parse(
             openAiFunction.function.arguments
+          );
+          console.log(
+            `Arguments determined for get_device_status by gpt-4: ${JSON.stringify(args)}`
           );
           return {
             tool_call_id: openAiFunction.id,
