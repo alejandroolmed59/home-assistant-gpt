@@ -2,10 +2,11 @@ import { CoreMessage } from "ai";
 import { useEffect, useState } from "react";
 import { CardDemo, SmartplugComponent, SmartBulbComponent } from "@/components";
 import { TermostatoComponent } from "@/components/Termostato";
-import { Input, Alert } from "@mantine/core";
+import { Input, Alert, Skeleton } from "@mantine/core";
 
 export default function Page() {
   const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<CoreMessage[]>([]);
   const [devices, setDevices] = useState([
     {
@@ -58,6 +59,7 @@ export default function Page() {
   const onSendCommand = async () => {
     {
       setInput("");
+      setIsLoading(true);
       const responseGenerateObject = await fetch("/api/open-ai-assistant", {
         method: "POST",
         body: JSON.stringify({
@@ -67,6 +69,7 @@ export default function Page() {
         }),
       });
       const response = await responseGenerateObject.json();
+      setIsLoading(false);
       if (!response.threadId || !response.runExecutionResult) return;
       setThreadId(response.threadId);
       setDevices(response.runExecutionResult.devices);
@@ -127,7 +130,16 @@ export default function Page() {
         <div className="flex justify-center mb-1">
           <div className="rounded-t-xl px-4 py-3 bg-sky-100 w-full md:w-3/4">
             <h4 className="font-bold mb-1">Assistant output</h4>
-            <p>{assistantOutput}</p>
+            {isLoading ? (
+              <>
+                <Skeleton height={8} width="45%" mt={6} radius="xl" />
+                <Skeleton height={8} width="30%" mt={6} radius="xl" />
+                <Skeleton height={8} width="40%" mt={6} radius="xl" />{" "}
+                <Skeleton height={8} width="35%" mt={6} radius="xl" />{" "}
+              </>
+            ) : (
+              <p>{assistantOutput}</p>
+            )}
           </div>
         </div>
         <Input
