@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { CardDemo, SmartplugComponent, SmartBulbComponent } from "@/components";
 import { TermostatoComponent } from "@/components/Termostato";
 import { Input, Alert, Skeleton } from "@mantine/core";
+import { useRecordVoice } from "../hooks/speechToText";
 
 export default function Page() {
+  const { startRecording, stopRecording, speechToText } = useRecordVoice();
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [messages, setMessages] = useState<CoreMessage[]>([]);
@@ -55,7 +57,9 @@ export default function Page() {
   ]);
   const [threadId, setThreadId] = useState<any>();
   const [assistantOutput, setAssistantOutput] = useState<string>("");
-
+  useEffect(() => {
+    setInput(speechToText);
+  }, [speechToText]);
   const onSendCommand = async () => {
     {
       setInput("");
@@ -76,11 +80,20 @@ export default function Page() {
       setAssistantOutput(response.messages.lastAssistantMessage);
     }
   };
+
   return (
     <div className="flex flex-col gap-2 h-screen p-5">
       <h1 className="text-4xl font-bold text-center">
         Smart home virtual assistant
       </h1>
+      <button
+        onMouseDown={startRecording} // Start recording when mouse is pressed
+        onMouseUp={stopRecording} // Stop recording when mouse is released
+        onTouchStart={startRecording} // Start recording when touch begins on a touch device
+        onTouchEnd={stopRecording} // Stop recording when touch ends on a touch device
+      >
+        Pusheame{" "}
+      </button>
       <div className="h-screen max-h-screen overflow-y-auto grid grid-cols-12 gap-5 p-5">
         {devices.map((device) => {
           let component: JSX.Element;
