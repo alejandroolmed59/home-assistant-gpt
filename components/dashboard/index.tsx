@@ -5,6 +5,7 @@ import { TermostatoComponent } from "@/components/Termostato";
 import { Input, Alert, Skeleton } from "@mantine/core";
 import { useRecordVoice } from "../hooks/speechToText";
 import { PiMicrophoneFill } from "react-icons/pi";
+import ReactMarkdown from "react-markdown";
 
 export default function Page() {
   const { startRecording, stopRecording, speechToText } = useRecordVoice();
@@ -122,7 +123,7 @@ export default function Page() {
               />
             );
           } else {
-            component = <CardDemo />;
+            component = <CardDemo key={0} />;
           }
           return (
             <div
@@ -135,7 +136,7 @@ export default function Page() {
 
       <div className="bottom-0 p-2 w-full mb-5">
         <div className="flex justify-center mb-1">
-          <div className="rounded-t-xl px-4 py-3 bg-sky-100 w-full md:w-3/4">
+          <div className="rounded-xl px-4 py-3 bg-sky-100 w-full md:w-4/5">
             <h4 className="font-bold mb-1">Assistant output</h4>
             {isLoading ? (
               <>
@@ -145,11 +146,13 @@ export default function Page() {
                 <Skeleton height={8} width="35%" mt={6} radius="xl" />{" "}
               </>
             ) : (
-              <p>{assistantOutput}</p>
+              <ReactMarkdown className="md:text-base sm:text-xs">
+                {assistantOutput}
+              </ReactMarkdown>
             )}
           </div>
         </div>
-        <div className="flex">
+        <div className="flex pt-5">
           <Input
             value={input}
             placeholder="What are we doing today ? ✨"
