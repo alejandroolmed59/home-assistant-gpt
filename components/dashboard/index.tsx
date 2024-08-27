@@ -18,7 +18,7 @@ export default function Page() {
       deviceProperties: {
         deviceName: "SmartPlug living room",
         description:
-          "Usado para darle electricidad a mi arbol de navidad en navidades o lampara de la sala",
+          "Used to power my Christmas tree at Christmas, also used for my living room lamp!",
         switch: "ON",
       },
     },
@@ -26,9 +26,9 @@ export default function Page() {
       id: 2,
       deviceType: "thermostat",
       deviceProperties: {
-        deviceName: "Mi termostato",
+        deviceName: "Home's thermostat",
         description:
-          "En verano gasta mas electricidad de la necesaria al esta encendido todo el dia",
+          "In summer it uses more electricity than necessary by being on all day. We're in winter right now so it'll probably be set very hot a couple of months",
         mode: "HEAT",
         temperature: "32",
         switch: "ON",
@@ -38,9 +38,9 @@ export default function Page() {
       id: 3,
       deviceType: "smartplug",
       deviceProperties: {
-        deviceName: "SmartPlug cargador movil",
+        deviceName: "My smartphone plug",
         description:
-          "Usado para darle electricidad a telefono celular, lo tengo enchufado en mi habitacion",
+          "Used to power my phone, I have it plugged in in my room on the left wall",
         switch: "OFF",
       },
     },
@@ -48,9 +48,9 @@ export default function Page() {
       id: 4,
       deviceType: "smartbulb",
       deviceProperties: {
-        deviceName: "Bombilla de mi habitacion",
+        deviceName: "My bedroom bulb",
         description:
-          "Cuando estoy aburrido puedo simular tener una disco en mi propia habitacion",
+          "Honestly one of the most usefull things I have ever been gifted! I can change the colors depending on my mood",
         color: "#6a00c9",
         switch: "ON",
       },
@@ -152,7 +152,7 @@ export default function Page() {
         <div className="flex">
           <Input
             value={input}
-            placeholder="✨🤖 ¿Qué quieres hacer en tu hogar?"
+            placeholder="What are we doing today ? ✨"
             onChange={(event) => {
               setInput(event.target.value);
             }}

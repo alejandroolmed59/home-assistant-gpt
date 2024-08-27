@@ -43,7 +43,7 @@ const createRun = async (
     { pollIntervalMs: 500 }
   );
   const endTime = Date.now();
-  console.log(`elapsed in run creation and polling ${endTime - startTime}`);
+  console.debug(`elapsed in run creation and polling ${endTime - startTime}`);
   return run;
 };
 const getMessagesFromThread = async (threadId: string) => {

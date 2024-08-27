@@ -26,17 +26,17 @@ export const TermostatoComponent = (props: {
       </Card.Section>
 
       <Grid grow gutter="xs">
-        <Grid.Col span={4}>
+        <Grid.Col span={6}>
           <Text fw={500}>{props.name}</Text>
         </Grid.Col>
         {props.switch === "OFF" ? (
-          <Grid.Col span={4}>
+          <Grid.Col span={6}>
             <Badge color="#A9A9A9">{props.switch}</Badge>{" "}
           </Grid.Col>
         ) : (
           <Grid.Col span={6}>
             <Badge color={props.mode === "HEAT" ? "#dc2626" : "#22d3ee"}>
-              Temperatura {props.temperature}°
+              Temperature {props.temperature}°
             </Badge>
           </Grid.Col>
         )}
