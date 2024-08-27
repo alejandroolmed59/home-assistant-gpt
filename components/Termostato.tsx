@@ -10,8 +10,8 @@ export const TermostatoComponent = (props: {
   name: string;
   description: string;
   switch: "ON" | "OFF";
-  temperature: number;
-  mode: "HEAT" | "COLD";
+  temperature: string;
+  mode: "HEAT" | "COOL";
 }) => {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
@@ -26,17 +26,17 @@ export const TermostatoComponent = (props: {
       </Card.Section>
 
       <Grid grow gutter="xs">
-        <Grid.Col span={4}>
+        <Grid.Col span={6}>
           <Text fw={500}>{props.name}</Text>
         </Grid.Col>
         {props.switch === "OFF" ? (
-          <Grid.Col span={4}>
+          <Grid.Col span={6}>
             <Badge color="#A9A9A9">{props.switch}</Badge>{" "}
           </Grid.Col>
         ) : (
           <Grid.Col span={6}>
             <Badge color={props.mode === "HEAT" ? "#dc2626" : "#22d3ee"}>
-              Temperatura {props.temperature}°
+              Temperature {props.temperature}°
             </Badge>
           </Grid.Col>
         )}
@@ -57,9 +57,9 @@ export const TermostatoComponent = (props: {
         <Grid.Col span={6}>
           <Badge
             fullWidth
-            color={props.mode === "COLD" ? "#22d3ee" : "#A9A9A9"}
+            color={props.mode === "COOL" ? "#22d3ee" : "#A9A9A9"}
           >
-            COLD
+            COOL
           </Badge>
         </Grid.Col>
       </Grid>
