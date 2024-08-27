@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     apiKey: process.env.PERPLEXITY_API_KEY ?? "",
     baseURL: "https://api.perplexity.ai/",
   });
-  const model = perplexity("llama-3-sonar-small-32k-chat");
+  const model = perplexity("llama-3.1-sonar-small-128k-chat");
   const generateTextResponse = await generateText({
     model,
     system: `Eres un asistente de una casa inteligente que controla varios dispositivos inteligentes como smartplugs, smartbulbs, termostatos. Tu unica funcion es decirme si el usuario quiere actualizar una propiedad de sus dispositivos, busca palabras claves en la peticion como 'actualiza', 'apaga', 'enciende', 'cambia', si es así me responderas 'ACTUALIZAR'. Si el usuario hace una pregunta del estado de sus dispositivos me responderas 'PREGUNTA'. Tus unicas respuestas validas son 'ACTUALIZAR' y 'PREGUNTA'  `,
