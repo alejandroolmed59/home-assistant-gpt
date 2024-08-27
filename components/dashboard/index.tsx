@@ -4,6 +4,7 @@ import { CardDemo, SmartplugComponent, SmartBulbComponent } from "@/components";
 import { TermostatoComponent } from "@/components/Termostato";
 import { Input, Alert, Skeleton } from "@mantine/core";
 import { useRecordVoice } from "../hooks/speechToText";
+import { PiMicrophoneFill } from "react-icons/pi";
 
 export default function Page() {
   const { startRecording, stopRecording, speechToText } = useRecordVoice();
@@ -86,14 +87,7 @@ export default function Page() {
       <h1 className="text-4xl font-bold text-center">
         Smart home virtual assistant
       </h1>
-      <button
-        onMouseDown={startRecording} // Start recording when mouse is pressed
-        onMouseUp={stopRecording} // Stop recording when mouse is released
-        onTouchStart={startRecording} // Start recording when touch begins on a touch device
-        onTouchEnd={stopRecording} // Stop recording when touch ends on a touch device
-      >
-        Pusheame{" "}
-      </button>
+
       <div className="h-screen max-h-screen overflow-y-auto grid grid-cols-12 gap-5 p-5">
         {devices.map((device) => {
           let component: JSX.Element;
@@ -155,24 +149,34 @@ export default function Page() {
             )}
           </div>
         </div>
-        <Input
-          value={input}
-          placeholder="✨🤖 ¿Qué quieres hacer en tu hogar?"
-          onChange={(event) => {
-            setInput(event.target.value);
-          }}
-          variant="filled"
-          size="xl"
-          radius="lg"
-          classNames={{
-            input: "outline outline-1 outline-gray-300",
-          }}
-          onKeyDown={async (event) => {
-            if (event.key === "Enter") {
-              await onSendCommand();
-            }
-          }}
-        />
+        <div className="flex">
+          <Input
+            value={input}
+            placeholder="✨🤖 ¿Qué quieres hacer en tu hogar?"
+            onChange={(event) => {
+              setInput(event.target.value);
+            }}
+            variant="filled"
+            size="xl"
+            radius="lg"
+            className="w-11/12"
+            classNames={{
+              input: "outline outline-1 outline-gray-300",
+            }}
+            onKeyDown={async (event) => {
+              if (event.key === "Enter") {
+                await onSendCommand();
+              }
+            }}
+          />
+          <PiMicrophoneFill
+            className="w-1/12 cursor-pointer h-12"
+            onMouseDown={startRecording} // Start recording when mouse is pressed
+            onMouseUp={stopRecording} // Stop recording when mouse is released
+            onTouchStart={startRecording} // Start recording when touch begins on a touch device
+            onTouchEnd={stopRecording} // Stop recording when touch ends on a touch device
+          />
+        </div>
       </div>
     </div>
   );
