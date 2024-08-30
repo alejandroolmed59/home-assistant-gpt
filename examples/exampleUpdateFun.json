@@ -1,0 +1,13 @@
+{
+  "deviceId": "2",
+  "changingProperties": [
+    {
+      "propertyKey": "temperature",
+      "propertyValue": "4"
+    },
+    {
+      "propertyKey": "mode",
+      "propertyValue": "COOL"
+    }
+  ]
+}
