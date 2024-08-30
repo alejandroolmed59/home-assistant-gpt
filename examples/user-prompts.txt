@@ -1,0 +1,26 @@
+//General QA
+Hey, so you are my new virtual assistant, right? What you can do for me?
+
+// Read a JSON on natural language. multiple devices
+I'm not at home right now, can you tell me the status of my plugs ?
+
+// Update specific property
+I see that my smartphone plug is off, can you turn that on for me please ?
+
+// Understands no longer want to have the thermostat on at a high temperature
+Hey I just arrived at home, its so hot outside, do something about it
+
+// comprehends feelings and desires
+Today was not a good day, can you please change my bulb color to something that will cheer me up please ?
+
+// Adequates neccesary of the user
+I'm not a yellow-kind of guy, change it to something more red-ish
+
+// Explains why its change was not arbitrary
+Why did you change it to that color ?
+
+// Follow up questions based on the conversation
+Whats my least favorite color ?
+
+// Multiple update functions triggered
+I'm leaving my home, turn everything off
